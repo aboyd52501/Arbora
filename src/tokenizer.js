@@ -52,9 +52,7 @@ const arboraTokenizerList = [
     new Tokenizer('\\s+', 'WhiteSpace'),
     new Tokenizer('\\(', 'LParen'),
     new Tokenizer('\\)', 'RParen'),
-    new Tokenizer('\\d+', 'Number'),
-    new Tokenizer('\"[^\"]*\"', 'String'),
-    new Tokenizer('\\w+', 'Identifier')
+    new Tokenizer('[^()\\s]+', 'Atom')
 ];
 
 const tokenizeArbora = (program) => tokenizeProgram(program, arboraTokenizerList);
