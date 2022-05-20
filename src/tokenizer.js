@@ -44,7 +44,19 @@ function tokenizeProgram(program, tokenizerList) {
         }
     }
     
-    return tokens;
+    return tokens.filter(t => t.type !== 'WhiteSpace' && t.type !== 'Comment'); // remove whitespace and comments
 }
 
-module.exports = { Token, Tokenizer, tokenizeProgram };
+const arboraTokenizerList = [
+    new Tokenizer('#[^#]*#', 'Comment'),
+    new Tokenizer('\\s+', 'WhiteSpace'),
+    new Tokenizer('\\(', 'LParen'),
+    new Tokenizer('\\)', 'RParen'),
+    new Tokenizer('\\d+', 'Number'),
+    new Tokenizer('\"[^\"]*\"', 'String'),
+    new Tokenizer('\\w+', 'Identifier')
+];
+
+const tokenizeArbora = (program) => tokenizeProgram(program, arboraTokenizerList);
+
+module.exports = { tokenizeArbora };
