@@ -11,9 +11,18 @@ const program =
         (3 4 *)
         /
     )
+
     do
 `;
 
 
 const tree = generateArboraActionTree(program);
 console.log(tree);
+
+console.log('\n\n');
+
+tree.forEach((f, ...args) => {
+    console.log(`\nRunning function\n`, f, '\nwith args \n', args)
+    console.log('');
+    return `${f.value}(${args.map(x=>x.value||x).join(', ')})`;
+});
