@@ -1,9 +1,10 @@
 const { tokenizeArbora } = require('./tokenizer.js');
+const { Tree } = require('./util/tree.js');
 
 // takes a list of tokens and generates a syntax tree
-// Token[] -> [[1, 2, 3], [4, 5], 7, 8, "hello", var, func]
+// [Token, Token, Token] -> Tree
 function generateAST(tokenList) {
-    let tree = [];
+    let tree = new Tree();
     let currentToken = null;
     while (currentToken = tokenList.shift()) {
         switch (currentToken.type) {

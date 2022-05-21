@@ -1,4 +1,4 @@
-const { generateArboraActionTree } = require('../src/parsing/ast-type-caster.js');
+const { generateTypeCastedArboraTree } = require('../src/parsing/ast-type-caster.js');
 
 const program = 
 `((3 4 add) (5 6 add) mul) # comment #
@@ -8,5 +8,5 @@ const program =
 lo"     `;
 
 
-const actionTree = generateArboraActionTree(program);
+const actionTree = generateTypeCastedArboraTree(program);
 console.log(actionTree);
