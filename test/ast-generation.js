@@ -1,4 +1,4 @@
-const { parseArbora } = require('../src/ast-generator.js');
+const { parseArbora } = require('../src/parsing/ast-generator.js');
 
 const program = 
 `((3 4 add) (5 6 add) mul) # comment #
@@ -7,4 +7,5 @@ const program =
 hello     `;
 
 const AST = parseArbora(program);
-console.log(AST);
+const jsons = JSON.stringify(AST, null, 2);
+console.log(jsons);

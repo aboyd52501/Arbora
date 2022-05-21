@@ -1,4 +1,4 @@
-const { tokenizeArbora } = require('../src/tokenizer.js');
+const { tokenizeArbora } = require('../src/parsing/tokenizer.js');
 
 const program = 
 `((3 4 add) (5 6 add) mul) # comment #
