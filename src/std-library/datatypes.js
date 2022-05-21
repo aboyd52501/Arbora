@@ -19,7 +19,7 @@ class StringType extends DataType {
 
 class BooleanType extends DataType {
     constructor(value) {
-        super('Boolean', !!value);
+        super('Boolean', value === 'true');
     }
 }
 
