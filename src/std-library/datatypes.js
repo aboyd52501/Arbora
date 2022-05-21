@@ -44,5 +44,11 @@ const typePatterns = [
 ];
 
 module.exports = {
-    typePatterns
+    typePatterns,
+    DataType,
+    NumberType,
+    StringType,
+    BooleanType,
+    VoidType,
+    IdentifierType
 };
