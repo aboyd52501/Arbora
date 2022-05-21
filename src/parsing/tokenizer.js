@@ -49,10 +49,11 @@ function tokenizeProgram(program, tokenizerList) {
 
 const arboraTokenizerList = [
     new Tokenizer('#[^#]*#', 'Comment'),
+    new Tokenizer('"[^"]*"', 'Atom'), // catches strings (multiline string support)
+    new Tokenizer('[^()\\s]+', 'Atom'), // normal variables, numbers, etc
     new Tokenizer('\\s+', 'WhiteSpace'),
     new Tokenizer('\\(', 'LParen'),
     new Tokenizer('\\)', 'RParen'),
-    new Tokenizer('[^()\\s]+', 'Atom')
 ];
 
 const tokenizeArbora = (program) => tokenizeProgram(program, arboraTokenizerList);

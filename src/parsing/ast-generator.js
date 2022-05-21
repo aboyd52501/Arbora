@@ -1,40 +1,23 @@
 const { tokenizeArbora } = require('./tokenizer.js');
 
-class Node {
-    constructor(type, value, children) {
-        this.type = type;
-        this.value = value;
-        this.children = children;
-    }
-}
-
-function BranchNode(children) {
-    return new Node('Branch', null, children);
-}
-
-function LeafNode(value) {
-    return new Node('Leaf', value, null);
-}
-
 // takes a list of tokens and generates a syntax tree
+// Token[] -> [[1, 2, 3], [4, 5], 7, 8, "hello", var, func]
 function generateAST(tokenList) {
-    let tree = BranchNode([]); // root node
-    
+    let tree = [];
     let currentToken = null;
-    while(currentToken = tokenList.shift()) {
-        switch(currentToken.type) {
-            case 'Atom':
-                tree.children.push(LeafNode(currentToken.value));
-                break;
+    while (currentToken = tokenList.shift()) {
+        switch (currentToken.type) {
             case 'LParen':
-                const subTree = generateAST(tokenList);
-                tree.children.push(subTree);
+                tree.push(generateAST(tokenList));
                 break;
             case 'RParen':
                 return tree;
                 break;
+            case 'Atom':
+                tree.push(currentToken.value);
+                break;
             default:
-                throw new Error(`Unexpected token ${currentToken.type}`);
+                throw new Error(`Invalid token type: ${currentToken.type}`);
         }
     }
 
