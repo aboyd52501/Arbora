@@ -35,6 +35,15 @@ class Tree {
         return out;
     }
 
+    forEach(callback) {
+        this.children.forEach(child => {
+            if (child instanceof Tree)
+                child.forEach(callback);
+            else
+                callback(child);
+        });
+    }
+
     reduce(callback, initialValue) {
         return this.children.reduce(callback, initialValue);
     }
