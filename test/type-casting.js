@@ -10,3 +10,4 @@ lo"     `;
 
 const actionTree = generateTypeCastedArboraTree(program);
 console.log(actionTree);
+console.log(JSON.stringify(actionTree, null, 2));
