@@ -43,7 +43,7 @@ class BooleanType extends DataType {
      * @param {boolean} value - The value to be converted to a BooleanType.
      */
     constructor(value) {
-        super('Boolean', value.toUpperCase() === 'TRUE');
+        super('Boolean', value.toLowerCase() === 'true');
     }
 }
 
@@ -64,7 +64,7 @@ class VoidType extends DataType {
 class IdentifierType extends DataType {
 
     constructor(value) {
-        super('Identifier', value.toUpperCase());
+        super('Identifier', value.toLowerCase());
     }
 
     /**
