@@ -17,9 +17,10 @@ class StringType extends DataType {
     }
 }
 
+// Booleans aren't case sensitive.
 class BooleanType extends DataType {
     constructor(value) {
-        super('Boolean', value === 'true');
+        super('Boolean', value.toUpperCase() === 'TRUE');
     }
 }
 
@@ -29,18 +30,19 @@ class VoidType extends DataType {
     }
 }
 
+// Identifiers aren't case sensitive.
 class IdentifierType extends DataType {
     constructor(value) {
-        super('Identifier', value);
+        super('Identifier', value.toUpperCase());
     }
 }
 
 const typePatterns = [
     [/^\d+$/, NumberType],
     [/^"[^"]*"$/, StringType],
-    [/^(true|false)$/, BooleanType],
-    [/^null$/, VoidType],
-    [/^\S+$/, IdentifierType]
+    [/^(true|false)$/i, BooleanType],
+    [/^null$/i, VoidType],
+    [/^\S+$/i, IdentifierType]
 ];
 
 module.exports = {
