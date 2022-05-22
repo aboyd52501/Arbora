@@ -1,17 +1,37 @@
+const { Scope } = require('./scope.js');
+
 class DataType {
-  constructor(type, value) {
+
+    /**
+     * @param {string} type - What type of data is this?
+     * @param {any} value - The value of the data.
+     */
+    constructor(type, value) {
     this.type = type;
     this.value = value;
-  }
+    }
+
+    /**
+     * Returns the value of the data.
+     */ 
+    eval() {
+        return this.value;
+    }
 }
 
 class NumberType extends DataType {
+    /**
+     * @param {number} value - The value to be converted to a NumberType.
+     */
     constructor(value) {
         super('Number', Number(value));
     }
 }
 
 class StringType extends DataType {
+    /**
+     * @param {string} value - The value to be converted to a StringType.
+     */
     constructor(value) {
         super('String', value.substring(1, value.length - 1));
     }
@@ -19,21 +39,40 @@ class StringType extends DataType {
 
 // Booleans aren't case sensitive.
 class BooleanType extends DataType {
+    /**
+     * @param {boolean} value - The value to be converted to a BooleanType.
+     */
     constructor(value) {
         super('Boolean', value.toUpperCase() === 'TRUE');
     }
 }
 
+/**
+ * This class represents a null value.
+ */
 class VoidType extends DataType {
     constructor() {
         super('Void', null);
     }
 }
 
-// Identifiers aren't case sensitive.
+/**
+ * This class represents a variable or macro name.
+ * The name is not case sensitive.
+ * @param {string} value - The name of the identifier.
+ */
 class IdentifierType extends DataType {
+
     constructor(value) {
         super('Identifier', value.toUpperCase());
+    }
+
+    /**
+     * Returns the value of an identifier.
+     * @param {Scope} scope - the scope in which to search for the identifier
+     */
+    eval(scope) {
+        return scope.getValue(this.value);
     }
 }
 

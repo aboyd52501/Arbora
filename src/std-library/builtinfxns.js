@@ -8,6 +8,10 @@ class BuiltInFunction {
 }
 
 const builtinFxns = {
+    // Control flow functions
+    'if': new BuiltInFunction('if', (_if, _then, _else) => _if ? _then : _else),
+    'do': new BuiltInFunction('do', (...args) => args.at(-1)), // just return the last argument.
+
     // Math functions
     '+': new BuiltInFunction('+', (a, b) => a + b),
     '-': new BuiltInFunction('-', (a, b) => a - b),
@@ -23,6 +27,8 @@ const builtinFxns = {
     '>=': new BuiltInFunction('>=', (a, b) => a >= b),
     '=': new BuiltInFunction('=', (a, b) => a == b),
     '!=': new BuiltInFunction('!=', (a, b) => a != b),
+
+    // Logical functions
     '&&': new BuiltInFunction('&&', (a, b) => a && b),
     '||': new BuiltInFunction('||', (a, b) => a || b),
     '!' : new BuiltInFunction('!', (a) => !a),
