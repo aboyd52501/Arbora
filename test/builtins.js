@@ -23,14 +23,28 @@ const program =
     do
 `;
 
-const actionTree = generateArboraActionTree(program);
-const varTree = actionTree.map(x => x.eval(programScope));
+const variadicFxnTest =
+`
+    (3 3 10 *)
+    5
+    /
+`
 
-const out = varTree.execute((func, ...args) => {
-    if (func instanceof BuiltInFunction)
-        return func.func(...args);
-    else
-        return func;
-});
+function runProgram(program) {
+    const actionTree = generateArboraActionTree(program);
+    const varTree = actionTree.map(x => x.eval(programScope));
 
-console.log(out);
+    const out = varTree.execute((func, ...args) => {
+        if (func instanceof BuiltInFunction)
+            return func.func(...args);
+        else
+            return func;
+    });
+
+    return out;
+}
+
+
+console.log(runProgram(program));
+console.log('\n');
+console.log(runProgram(variadicFxnTest));

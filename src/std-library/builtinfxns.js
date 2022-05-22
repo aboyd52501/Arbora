@@ -13,12 +13,12 @@ const builtinFxns = {
     'do': new BuiltInFunction('do', (...args) => args.at(-1)), // just return the last argument.
 
     // Math functions
-    '+': new BuiltInFunction('+', (a, b) => a + b),
-    '-': new BuiltInFunction('-', (a, b) => a - b),
-    '*': new BuiltInFunction('*', (a, b) => a * b),
-    '/': new BuiltInFunction('/', (a, b) => a / b),
-    '%': new BuiltInFunction('%', (a, b) => a % b),
-    '^': new BuiltInFunction('^', (a, b) => Math.pow(a, b)),
+    '+': new BuiltInFunction('+', (...args) => args.reduce((l,r) => l+r)),
+    '-': new BuiltInFunction('-', (...args) => args.reduce((l,r) => l-r)),
+    '*': new BuiltInFunction('*', (...args) => args.reduce((l,r) => l*r)),
+    '/': new BuiltInFunction('/', (...args) => args.reduce((l,r) => l/r)),
+    '%': new BuiltInFunction('%', (...args) => args.reduce((l,r) => l%r)),
+    '^': new BuiltInFunction('^', (...args) => args.reduce((l,r) => Math.pow(l,r))),
 
     // Comparison functions
     '<': new BuiltInFunction('<', (a, b) => a < b),
