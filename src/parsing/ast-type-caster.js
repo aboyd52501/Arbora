@@ -1,5 +1,5 @@
 const { parseArbora } = require('./ast-generator.js');
-const { typePatterns } = require('../std-library/datatypes.js');
+const { typePatterns } = require('../environment/datatypes.js');
 
 
 function typeCastTree(ast) {
