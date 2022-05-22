@@ -24,7 +24,13 @@ class Action extends Tree {
 
     // Maps every leaf in the actionTree using a given callback
     map(callback) {
-        const out = new Action(callback(this.functionIdentifier)); // Remember to preserve the functionIdentifier and not just the children!
+        const out = new Action(); // Remember to preserve the functionIdentifier and not just the children!
+        
+        const fn = this.functionIdentifier instanceof Action
+            ? this.functionIdentifier.map(callback)
+            : callback(this.functionIdentifier);
+
+        out.functionIdentifier = fn;
 
         this.children.forEach(child => {
             if (child instanceof Action)

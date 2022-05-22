@@ -30,9 +30,23 @@ const variadicFxnTest =
     /
 `
 
+const ifTest =
+`
+(
+  (
+    (2 3 <)
+    (10 10 =)
+    &&
+  )
+  true
+  false
+  if
+)
+`
+
 function runProgram(program) {
     const actionTree = generateArboraActionTree(program);
-    const varTree = actionTree.map(x => x.eval(programScope));
+    const varTree = actionTree.map(x => {return x.eval(programScope)});
 
     const out = varTree.execute((func, ...args) => {
         if (func instanceof BuiltInFunction)
@@ -48,3 +62,5 @@ function runProgram(program) {
 console.log(runProgram(program));
 console.log('\n');
 console.log(runProgram(variadicFxnTest));
+console.log('\n');
+console.log(runProgram(ifTest));
