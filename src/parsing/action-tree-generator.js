@@ -4,6 +4,7 @@ const { generateTypeCastedArboraTree } = require('./ast-type-caster.js');
 const { IdentifierType } = require('../std-library/datatypes.js');
 
 // [[1, 2, add], 3, mul] -> mul[add[1, 2], 3]
+// Action trees represent a ready-to-run program that has not been passed to the interpreter yet.
 function generateActionTree(typedAST) {
     
     const last = typedAST.pop();
