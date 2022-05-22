@@ -7,19 +7,33 @@ class Action extends Tree {
     }
 
     // Runs a callback with each Action in the entire action tree, recursively.
-    forEach(callback) {
+    execute(callback) {
         const func = this.functionIdentifier instanceof Action
-            ? this.functionIdentifier.forEach(callback)
+            ? this.functionIdentifier.execute(callback)
             : this.functionIdentifier;
         
         const args = this.children.map(child => {
             if (child instanceof Action)
-                return child.forEach(callback);
+                return child.execute(callback);
             else
                 return child;
         });
 
         return callback(func, ...args);
+    }
+
+    // Maps every leaf in the actionTree using a given callback
+    map(callback) {
+        const out = new Action(callback(this.functionIdentifier)); // Remember to preserve the functionIdentifier and not just the children!
+
+        this.children.forEach(child => {
+            if (child instanceof Action)
+                out.push(child.map(callback));
+            else
+                out.push(callback(child));
+        })
+
+        return out;
     }
 }
 
