@@ -21,7 +21,7 @@ console.log(tree);
 
 console.log('\n\n');
 
-tree.forEach((f, ...args) => {
+tree.execute((f, ...args) => {
     console.log(`\nRunning function\n`, f, '\nwith args \n', args)
     console.log('');
     return `${f.value}(${args.map(x=>x.value||x).join(', ')})`;
