@@ -7,8 +7,8 @@ class DataType {
      * @param {any} value - The value of the data.
      */
     constructor(type, value) {
-    this.type = type;
-    this.value = value;
+        this.type = type;
+        this.value = value;
     }
 
     /**
