@@ -137,7 +137,7 @@ function mapLeaves(tree, fn) {
         return tree.map(x => mapLeaves(x, fn));
 }
 
-// Run a callback on layer of the tree, starting from the bottom.
+// Run a callback on each layer of the tree, starting from the bottom.
 function execute(tree, callback) {
     return callback(...tree.map(x => {
         if (x instanceof Array)
@@ -182,26 +182,6 @@ class Function extends Macro {
         super('function');
         this.argList = args;
         this.body = body;
-    }
-    
-    /**
-     *  Substitutes the arguments in the function body with the given arguments.
-     * @param {Array} args The arguments to substitute.}
-     */
-    subArgs(...args) {
-        const argList = this.argList;
-        const body = this.body;
-        const argMap = argList.reduce((out, arg, i) => {
-            out[arg.value] = args[i];
-            return out;
-        }, {});
-        
-        return mapLeaves(body, x => {
-            if (x.type === 'identifier' && argMap[x.value])
-                return argMap[x.value];
-            else
-                return x;
-        });
     }
 
 }
@@ -365,8 +345,10 @@ builtins['+'] = function(scope, l, r) {
 }
 
 // Run a program already arborized and macroed.
-function runProgram(tree, parentScope) {
-    const scope = new Scope(parentScope);
+function runProgram(tree, parentScope, dontMakeOwnScope) {
+
+    // Make own scope by default.
+    const scope = dontMakeOwnScope === true ? parentScope : new Scope(parentScope);
 
     let result;
 
@@ -390,7 +372,12 @@ function runProgram(tree, parentScope) {
         if (typeof last === 'function')
             return last(scope, ...inputs);
         else if (last instanceof Function) {
-            return runProgram(last.subArgs(...inputs), scope);
+            const argMap = last.argList.reduce((acc, x, i) => {
+                acc[x.value] = inputs[i];
+                return acc;
+            }, {});
+            const fxnScope = new Scope(scope, argMap);
+            return runProgram(last.body, fxnScope, true);
         }
         else
             throw new Error(`Cannot execute ${JSON.stringify(last)}`);
@@ -405,7 +392,10 @@ const testProgram =
 (9 z setvar)
 (11 x setvar)
 
-(((x y z) ((x y +) z +) fn) add3 setvar)
+(
+    ((x y z) ((x y +) z +) fn)
+    add3
+    setvar)
 
 ((z x 3 add3) sum setvar)
 
@@ -414,7 +404,7 @@ do
 `
 
 const tree = applyMacros(arborizeProgram(testProgram), macros);
-// console.log(tree,'\n\n');
+console.log(tree,'\n\n');
 
 const globalScope = new GlobalScope({...builtins});
 const result = runProgram(tree, globalScope);
