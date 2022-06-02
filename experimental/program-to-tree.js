@@ -229,6 +229,14 @@ macros['if'] = function(condition, _then, _else) {
     return new IfBranch(condition, _then, _else);
 }
 
+macros['setvar'] = function(value, identifier) {
+    return [value, new Token('string', identifier.value), new Token('identifier', 'set')];
+}
+
+macros['getvar'] = function(identifier) {
+    return identifier;
+}
+
 // Apply macros
 
 /**
@@ -394,12 +402,14 @@ function runProgram(tree, parentScope) {
 
 const testProgram =
 `
-(15 'z' set)
-(21 'x' set)
+(9 z setvar)
+(11 x setvar)
 
-(((x y z) ((x y +) z +) fn) 'add3' set)
+(((x y z) ((x y +) z +) fn) add3 setvar)
 
-(1 2 3 add3)
+((z x 3 add3) sum setvar)
+
+sum
 do
 `
 
