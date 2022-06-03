@@ -74,4 +74,10 @@ const tokenizerList = [
     identifierTokenizer,
 ];
 
+
+function tokenizeArbora(program) {
+    return tokenizeString(program, tokenizerList);
+}
+
+module.exports = { tokenizeArbora, Token, Tokenizer, tokenizeString };
 // console.log(tokenizeString('(1 2 3) + (5 6 7) #hello# \'test\'', tokenizerList));
